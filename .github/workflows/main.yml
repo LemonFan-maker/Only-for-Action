@@ -8,6 +8,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: "移动一些文件"
         run: |
+          mkdir /home/runner/ocr/
           mkdir /home/runner/ocr/darknet
           mv * /home/runner/ocr/darknet
       - name: "安装依赖"
