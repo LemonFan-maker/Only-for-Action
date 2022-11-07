@@ -1,0 +1,39 @@
+name: Compile-Darknet-For-Action
+on:
+  workflow_dispatch:
+jobs:
+  OCR:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: "移动一些文件"
+        run: |
+          mkdir /home/runner/darknet
+          mv * /home/runner/darknet
+      - name: "安装依赖"
+        run: |
+          sudo apt-get update
+          sudo apt-get upgrade
+          sudo apt-get install gcc g++
+      - name: "开始编译"
+        run: |
+          cd /home/runner/darknet
+          make && ls && cd ..
+          ls
+      - name: "打包文件"
+        run: |
+          ls
+          cd /home/runner/darknet
+          tar -cvpzf darknet.tgz ./*
+          mv darknet.tgz ..
+          ls
+      - name: "上传文件"
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: darknet
+          name: darknet
+          body: Compile
+          draft: false
+          prerelease: false
+          files: /home/runner/darknet.tgz
+        
