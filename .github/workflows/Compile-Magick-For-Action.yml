@@ -1,0 +1,23 @@
+name: Compile-Magick-For-Action
+on:
+  workflow_dispatch:
+
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install
+        run: |
+          sudo apt-get update
+          sudo apt-get install pdflatex make cmake gcc g++ aria2
+      - name: Download
+        run: |
+          aria2c "wget https://github.com/LemonFan-maker/Download-Baidu-On-Action/releases/download/magick/ImageMagick.tar.gz"
+      - name: "Compile"
+        run: |
+          tar -xvf ImageMagick.tar.gz
+          cd ImageMagick-7.1.0-52
+          ./configure --with-gslib=yes;\
+          
